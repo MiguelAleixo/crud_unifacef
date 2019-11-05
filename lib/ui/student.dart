@@ -18,8 +18,7 @@ class _StudentScreenState extends State<StudentScreen> {
 
   @override
   void initState() {
-  super.initState();
-
+    super.initState();
     _nameController = new TextEditingController(text: widget.student.name);
     _classeController = new TextEditingController(text: widget.student.classe);
   }
@@ -53,9 +52,7 @@ class _StudentScreenState extends State<StudentScreen> {
                     'classe': _classeController.text
                   })).then((_) { Navigator.pop(context, 'update'); });
                 } else {
-                  db.saveStudent(Student(_nameController.text, _classeController.text)).then((_) {
-                    Navigator.pop(context, 'save');
-                  });
+                  db.saveStudent(Student(_nameController.text, _classeController.text)).then((_) { Navigator.pop(context, 'save'); });
                 }
               },
             ),

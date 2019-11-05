@@ -18,9 +18,9 @@ class _ListViewStudentState extends State<ListViewStudent> {
   void initState() {
     super.initState();
  
-    db.getAllStudents().then(students) {
+    db.getAllStudent().then(student) {
       setState(() {
-        Students.forEach((student) {
+        Student.forEach((student) {
           items.add(student.fromMap(student));
         });
       });
@@ -39,26 +39,19 @@ class _ListViewStudentState extends State<ListViewStudent> {
         ),
         body: Center(
           child: ListView.builder(
-              itemCount: items.length,
-              padding: const EdgeInsets.all(15.0),
-              itemBuilder: (context, position) {
-                return Column(
-                  children: <Widget>[
-                    Divider(height: 5.0),
-                    ListTile(
-                      title: Text(
-                        '${items[position].name}',
-                        style: TextStyle(
-                          fontSize: 22.0,
-                          color: Colors.deepOrangeAccent,
-                        ),
-                      ),
+            itemCount: items.length,
+            padding: const EdgeInsets.all(15.0),
+            itemBuilder: (context, position) {
+              return Column(
+                children: <Widget>[
+                  Divider(height: 5.0),
+                  ListTile(
+                    title: Text(
+                      '${items[position].name}',
+                      style: TextStyle(fontSize: 22.0, color: Colors.deepOrangeAccent)),
                       subtitle: Text(
                         '${items[position].classe}',
-                        style: new TextStyle(
-                          fontSize: 18.0,
-                          fontStyle: FontStyle.italic,
-                        ),
+                        style: new TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
                       ),
                       leading: Column(
                         children: <Widget>[
@@ -68,50 +61,39 @@ class _ListViewStudentState extends State<ListViewStudent> {
                             radius: 15.0,
                             child: Text(
                               '${items[position].id}',
-                              style: TextStyle(
-                                fontSize: 22.0,
-                                color: Colors.white,
-                              ),
+                              style: TextStyle(fontSize: 22.0, color: Colors.white),
                             ),
                           ),
                           IconButton(
-  icon: const Icon(Icons.remove_circle_outline),
-  onPressed: () => _deleteStudent(context, items[position], position)),
+                            icon: const Icon(Icons.remove_circle_outline),
+                            onPressed: () => _deleteStudent(context, items[position], position)),
                         ],
                       ),
-              onTap: () => _navigateToStudent(context, items[position]),
+                      onTap: () => _navigateToStudent(context, items[position]),
                     ),
                   ],
                 );
               }),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => _createNewStudent(context),
-        ),
+        floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () => _createNewStudent(context)),
       ),
     );
   }
  
   void _deleteStudent(BuildContext context, Student student, int position) async {
-    db.deleteStudent(student.id).then((students) {
-      setState(() {
-        items.removeAt(position);
-      });
+    db.deleteStudent(student.id).then((student) {
+      setState(() { items.removeAt(position); });
     });
   }
  
   void _navigateToStudent(BuildContext context, Student student) async {
-    String result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => StudentScreen(student)),
-    );
+    String result = await Navigator.push(context, MaterialPageRoute(builder: (context) => StudentScreen(student)));
  
     if (result == 'update') {
-      db.getAllStudents().then((students) {
+      db.getAllStudent().then((student) {
         setState(() {
           items.clear();
-          students.forEach((student) {
+          student.forEach((student) {
             items.add(Student.fromMap(student));
           });
         });
@@ -120,17 +102,12 @@ class _ListViewStudentState extends State<ListViewStudent> {
   }
  
   void _createNewStudent(BuildContext context) async {
-    //aguarda o retorno da página de cadastro
-    String result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => StudentScreen(Student('', ''))),
-    );
-     //se o retorno for salvar, recarrega a lista
+    String result = await Navigator.push(context, MaterialPageRoute(builder: (context) => StudentScreen(Student('', ''))));
     if (result == 'save') {
-      db.getAllStudents().then((students) {
+      db.getAllStudent().then((student) {
         setState(() {
           items.clear();
-          students.forEach((student) {
+          student.forEach((student) {
             items.add(Student.fromMap(student));
           });
         });

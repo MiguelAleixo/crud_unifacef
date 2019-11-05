@@ -17,7 +17,9 @@ class Student {
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    if (_id != null) { map['id'] = _id; }
+    if (_id != null) {
+      map['id'] = _id;
+    }
     map['name'] = _name;
     map['classe'] = _classe;
     return map;
