@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:crud_unifacef/model/students.dart';
+import 'package:crud_unifacef/model/student.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = new DatabaseHelper.internal();
  
   factory DatabaseHelper() => _instance;
  
-  final String tableNote = 'noteTable';
+  final String tableStudent = 'StudentTable';
   final String columnId = 'id';
   final String columnTitle = 'title';
   final String columnDescription = 'description';
@@ -25,51 +25,51 @@ class DatabaseHelper {
  
   initDb() async {
     String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'notes.db');
+    String path = join(databasesPath, 'Student.db');
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
  
   void _onCreate(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tableNote($columnId INTEGER PRIMARY KEY, $columnTitle TEXT, $columnDescription TEXT)');
+    await db.execute('CREATE TABLE $tableStudent($columnId INTEGER PRIMARY KEY, $columnTitle TEXT, $columnDescription TEXT)');
   }
  
-  Future<int> saveNote(Note note) async {
+  Future<int> saveStudent(Student Student) async {
     var dbClient = await db;
-    var result = await dbClient.insert(tableNote, note.toMap());
+    var result = await dbClient.insert(tableStudent, Student.toMap());
     return result;
   }
  
-  Future<List> getAllNotes() async {
+  Future<List> getAllStudent() async {
     var dbClient = await db;
-    var result = await dbClient.query(tableNote, columns: [columnId, columnTitle, columnDescription]);
+    var result = await dbClient.query(tableStudent, columns: [columnId, columnTitle, columnDescription]);
     return result.toList();
   }
  
   Future<int> getCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM $tableNote'));
+    return Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM $tableStudent'));
   }
  
-  Future<Note> getNote(int id) async {
+  Future<Student> getStudent(int id) async {
     var dbClient = await db;
-    List<Map> result = await dbClient.query(tableNote,
+    List<Map> result = await dbClient.query(tableStudent,
         columns: [columnId, columnTitle, columnDescription],
         where: '$columnId = ?',
         whereArgs: [id]);
  
-    if (result.length > 0) { return new Note.fromMap(result.first); }
+    if (result.length > 0) { return new Student.fromMap(result.first); }
     return null;
   }
  
-  Future<int> deleteNote(int id) async {
+  Future<int> deleteStudent(int id) async {
     var dbClient = await db;
-    return await dbClient.delete(tableNote, where: '$columnId = ?', whereArgs: [id]);
+    return await dbClient.delete(tableStudent, where: '$columnId = ?', whereArgs: [id]);
   }
  
-  Future<int> updateNote(Note note) async {
+  Future<int> updateStudent(Student Student) async {
     var dbClient = await db;
-    return await dbClient.update(tableNote, note.toMap(), where: "$columnId = ?", whereArgs: [note.id]);
+    return await dbClient.update(tableStudent, Student.toMap(), where: "$columnId = ?", whereArgs: [Student.id]);
   }
  
   Future close() async {
