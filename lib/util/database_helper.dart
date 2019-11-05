@@ -10,8 +10,8 @@ class DatabaseHelper {
  
   final String tableStudent = 'StudentTable';
   final String columnId = 'id';
-  final String columnTitle = 'title';
-  final String columnDescription = 'description';
+  final String columnName = 'name';
+  final String columnClasse = 'classe';
  
   static Database _db;
  
@@ -31,7 +31,7 @@ class DatabaseHelper {
   }
  
   void _onCreate(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tableStudent($columnId INTEGER PRIMARY KEY, $columnTitle TEXT, $columnDescription TEXT)');
+    await db.execute('CREATE TABLE $tableStudent($columnId INTEGER PRIMARY KEY, $columnName TEXT, $columnClasse TEXT)');
   }
  
   Future<int> saveStudent(Student Student) async {
@@ -42,7 +42,7 @@ class DatabaseHelper {
  
   Future<List> getAllStudent() async {
     var dbClient = await db;
-    var result = await dbClient.query(tableStudent, columns: [columnId, columnTitle, columnDescription]);
+    var result = await dbClient.query(tableStudent, columns: [columnId, columnName, columnClasse]);
     return result.toList();
   }
  
@@ -54,7 +54,7 @@ class DatabaseHelper {
   Future<Student> getStudent(int id) async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(tableStudent,
-        columns: [columnId, columnTitle, columnDescription],
+        columns: [columnId, columnName, columnClasse],
         where: '$columnId = ?',
         whereArgs: [id]);
  

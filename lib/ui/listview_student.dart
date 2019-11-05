@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqlite_listview_example/model/student.dart';
 import 'package:sqlite_listview_example/util/database_helper.dart';
-import 'package:sqlite_listview_example/ui/student_screen.dart';
+import 'package:sqlite_listview_example/ui/student.dart';
  
 class ListViewStudent extends StatefulWidget {
   @override
@@ -47,14 +47,14 @@ class _ListViewStudentState extends State<ListViewStudent> {
                     Divider(height: 5.0),
                     ListTile(
                       title: Text(
-                        '${items[position].title}',
+                        '${items[position].name}',
                         style: TextStyle(
                           fontSize: 22.0,
                           color: Colors.deepOrangeAccent,
                         ),
                       ),
                       subtitle: Text(
-                        '${items[position].description}',
+                        '${items[position].classe}',
                         style: new TextStyle(
                           fontSize: 18.0,
                           fontStyle: FontStyle.italic,
