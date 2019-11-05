@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sqlite_listview_example/model/student.dart';
-import 'package:sqlite_listview_example/util/database_helper.dart';
-import 'package:sqlite_listview_example/ui/student.dart';
+import 'package:crud_unifacef/model/student.dart';
+import 'package:crud_unifacef/util/database_helper.dart';
+import 'package:crud_unifacef/ui/student.dart';
  
 class ListViewStudent extends StatefulWidget {
   @override
