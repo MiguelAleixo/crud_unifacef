@@ -18,10 +18,10 @@ class _ListViewStudentState extends State<ListViewStudent> {
   void initState() {
     super.initState();
  
-    db.getAllStudent().then(student) {
+    db.getAllStudent().then((student) {
       setState(() {
-        Student.forEach((student) {
-          items.add(student.fromMap(student));
+        student.forEach((student) {
+          items.add(Student.fromMap(student));
         });
       });
     });

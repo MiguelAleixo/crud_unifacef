@@ -37,9 +37,9 @@ class DatabaseHelper {
         'CREATE TABLE $tableStudent($columnId INTEGER PRIMARY KEY, $columnTitle TEXT, $columnDescription TEXT)');
   }
 
-  Future<int> saveStudent(Student Student) async {
+  Future<int> saveStudent(Student student) async {
     var dbClient = await db;
-    var result = await dbClient.insert(tableStudent, Student.toMap());
+    var result = await dbClient.insert(tableStudent, student.toMap());
     return result;
   }
 
@@ -52,8 +52,7 @@ class DatabaseHelper {
 
   Future<int> getCount() async {
     var dbClient = await db;
-    return Sqflite.firstIntValue(
-        await dbClient.rawQuery('SELECT COUNT(*) FROM $tableStudent'));
+    return Sqflite.firstIntValue(await dbClient.rawQuery('SELECT COUNT(*) FROM $tableStudent'));
   }
 
   Future<Student> getStudent(int id) async {
@@ -62,10 +61,7 @@ class DatabaseHelper {
         columns: [columnId, columnTitle, columnDescription],
         where: '$columnId = ?',
         whereArgs: [id]);
-
-    if (result.length > 0) {
-      return new Student.fromMap(result.first);
-    }
+    if (result.length > 0) { return new Student.fromMap(result.first); }
     return null;
   }
 
@@ -75,10 +71,10 @@ class DatabaseHelper {
         .delete(tableStudent, where: '$columnId = ?', whereArgs: [id]);
   }
 
-  Future<int> updateStudent(Student Student) async {
+  Future<int> updateStudent(Student student) async {
     var dbClient = await db;
-    return await dbClient.update(tableStudent, Student.toMap(),
-        where: "$columnId = ?", whereArgs: [Student.id]);
+    return await dbClient.update(tableStudent, student.toMap(),
+        where: "$columnId = ?", whereArgs: [student.id]);
   }
 
   Future close() async {
