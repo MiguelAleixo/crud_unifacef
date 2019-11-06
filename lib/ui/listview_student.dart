@@ -33,37 +33,29 @@ class _ListViewStudentState extends State<ListViewStudent> {
       title: 'JSA ListView Demo',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('ListView Demo'),
+          title: Text('Listagem dos alunos'),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.red,
         ),
         body: Center(
           child: ListView.builder(
             itemCount: items.length,
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(0.0),
             itemBuilder: (context, position) {
               return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Divider(height: 5.0),
+                  Divider(height: 0.0),
                   ListTile(
                     title: Text(
-                      '${items[position].name}',
-                      style: TextStyle(fontSize: 22.0, color: Colors.deepOrangeAccent)),
-                      subtitle: Text(
-                        '${items[position].classe}',
-                        style: new TextStyle(fontSize: 18.0, fontStyle: FontStyle.italic),
-                      ),
+                      'Nome do aluno: ${items[position].name}\nIdade do aluno: ${items[position].age}',
+                      style: TextStyle(fontSize: 14.0, color: Colors.black, fontStyle: FontStyle.italic)),
+                      subtitle: Text('${items[position].classe}', style: new TextStyle(fontSize: 14.0, fontStyle: FontStyle.italic)),
                       leading: Column(
                         children: <Widget>[
-                          Padding(padding: EdgeInsets.all(10.0)),
-                          CircleAvatar(
-                            backgroundColor: Colors.blueAccent,
-                            radius: 15.0,
-                            child: Text(
-                              '${items[position].id}',
-                              style: TextStyle(fontSize: 22.0, color: Colors.white),
-                            ),
-                          ),
+                          Padding(padding: EdgeInsets.all(0.0)),
+                          Text('${items[position].id}', style: TextStyle(fontSize: 16.0, color: Colors.red)),
                           IconButton(
                             icon: const Icon(Icons.remove_circle_outline),
                             onPressed: () => _deleteStudent(context, items[position], position)),
@@ -102,7 +94,7 @@ class _ListViewStudentState extends State<ListViewStudent> {
   }
  
   void _createNewStudent(BuildContext context) async {
-    String result = await Navigator.push(context, MaterialPageRoute(builder: (context) => StudentScreen(Student('', ''))));
+    String result = await Navigator.push(context, MaterialPageRoute(builder: (context) => StudentScreen(Student('', '', ''))));
     if (result == 'save') {
       db.getAllStudent().then((student) {
         setState(() {

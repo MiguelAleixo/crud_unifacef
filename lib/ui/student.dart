@@ -15,18 +15,20 @@ class _StudentScreenState extends State<StudentScreen> {
 
   TextEditingController _nameController;
   TextEditingController _classeController;
+  TextEditingController _ageController;
 
   @override
   void initState() {
     super.initState();
     _nameController = new TextEditingController(text: widget.student.name);
     _classeController = new TextEditingController(text: widget.student.classe);
+    _ageController = new TextEditingController(text: widget.student.age);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Student')),
+      appBar: AppBar(title: Text('Aluno'), backgroundColor: Colors.red),
       body: Container(
         margin: EdgeInsets.all(15.0),
         alignment: Alignment.center,
@@ -34,12 +36,17 @@ class _StudentScreenState extends State<StudentScreen> {
           children: <Widget>[
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: 'Nome do Aluno'),
             ),
             Padding(padding: new EdgeInsets.all(5.0)),
             TextField(
               controller: _classeController,
-              decoration: InputDecoration(labelText: 'Classe'),
+              decoration: InputDecoration(labelText: 'Classe do aluno'),
+            ),
+            Padding(padding: new EdgeInsets.all(5.0)),
+            TextField(
+              controller: _ageController,
+              decoration: InputDecoration(labelText: 'Idade do aluno'),
             ),
             Padding(padding: new EdgeInsets.all(5.0)),
             RaisedButton(
@@ -49,10 +56,11 @@ class _StudentScreenState extends State<StudentScreen> {
                   db.updateStudent(Student.fromMap({
                     'id': widget.student.id,
                     'name': _nameController.text,
-                    'classe': _classeController.text
+                    'classe': _classeController.text,
+                    'age': _ageController.text
                   })).then((_) { Navigator.pop(context, 'update'); });
                 } else {
-                  db.saveStudent(Student(_nameController.text, _classeController.text)).then((_) { Navigator.pop(context, 'save'); });
+                  db.saveStudent(Student(_nameController.text, _classeController.text, _ageController.text)).then((_) { Navigator.pop(context, 'save'); });
                 }
               },
             ),
