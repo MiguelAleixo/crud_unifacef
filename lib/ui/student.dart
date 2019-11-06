@@ -50,7 +50,7 @@ class _StudentScreenState extends State<StudentScreen> {
             ),
             Padding(padding: new EdgeInsets.all(5.0)),
             RaisedButton(
-              child: (widget.student.id != null) ? Text('Update') : Text('Add'),
+              child: (widget.student.id != null) ? Text('Editar') : Text('Adicionar'),
               onPressed: () {
                 if (widget.student.id != null) {
                   db.updateStudent(Student.fromMap({

@@ -38,13 +38,10 @@ class _ListViewStudentState extends State<ListViewStudent> {
           backgroundColor: Colors.red,
         ),
         body: Center(
-          child: ListView.builder(
+          child: new ListView.builder(
             itemCount: items.length,
-            padding: const EdgeInsets.all(0.0),
             itemBuilder: (context, position) {
               return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Divider(height: 0.0),
                   ListTile(
@@ -56,9 +53,14 @@ class _ListViewStudentState extends State<ListViewStudent> {
                         children: <Widget>[
                           Padding(padding: EdgeInsets.all(0.0)),
                           Text('${items[position].id}', style: TextStyle(fontSize: 16.0, color: Colors.red)),
-                          IconButton(
-                            icon: const Icon(Icons.remove_circle_outline),
-                            onPressed: () => _deleteStudent(context, items[position], position)),
+                          SizedBox(
+                            height: 18.0,
+                            width: 18.0,
+                            child: new IconButton(
+                              icon: const Icon(Icons.remove_circle_outline),
+                              onPressed: () => _deleteStudent(context, items[position], position)
+                            )
+                          ),
                         ],
                       ),
                       onTap: () => _navigateToStudent(context, items[position]),
